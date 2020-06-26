@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,6 +15,8 @@ public class Player : MonoBehaviour
     private Animator thisAnimator = null;
 
     private float moveSpeed = 0.05f;
+    public GameManager GMS;
+    public GameObject ExplosionPrefeb;
 
     void Start()
     {
@@ -54,4 +57,13 @@ public class Player : MonoBehaviour
         transform.position = new Vector3(Mathf.Clamp(transform.position.x, -1.5f, 1.5f), transform.position.y, transform.position.z);
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag.Equals("Obstacle"))
+        {
+            GMS.LoseHealth();
+            Instantiate(ExplosionPrefeb, transform.position, transform.rotation);
+        }
+    }
+    
 }

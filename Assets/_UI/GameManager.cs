@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
 
     public static int Lives = 3;
     public static int Score = 0;
-
+    public HUD HUD;
     void Start()
     {
         Lives = 3;
@@ -32,5 +32,24 @@ public class GameManager : MonoBehaviour
         {
             SceneManager.LoadScene(0);
         }
+    }
+    public void LoseHealth()
+    {
+        print("Lives: " + Lives);
+        HUD.HUDManager.UpdateLives();
+        Lives--;
+        if (Lives <= 0)
+        {
+            print("Lost");
+            LoseGame();
+        }
+    }
+    public void IncreaseScore()
+    {
+        Score++;
+    }
+    public void LoseGame()
+    {
+        SceneManager.LoadScene(sceneBuildIndex: 1);
     }
 }

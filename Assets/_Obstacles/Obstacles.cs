@@ -6,10 +6,15 @@ public class Obstacles : MonoBehaviour
 {
     [SerializeField] private int Hitpoints = 3;
     [SerializeField] private bool RandomRotation = false;
+    public HUD HUD;
+    public GameManager GMS;
+   
+        
 
     private void Start()
     {
-        if(RandomRotation)
+       
+        if (RandomRotation)
             transform.eulerAngles = new Vector3(Random.Range(0, 180), Random.Range(0, 180), Random.Range(0, 180));
     }
 
@@ -19,6 +24,17 @@ public class Obstacles : MonoBehaviour
 
         if(transform.position.z <= -8)
         {
+            Destroy(gameObject);
+            HUD.HUDManager.UpdateScore();
+            GMS.IncreaseScore();
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag.Equals("Player"))
+        {
+            print("destroy");
             Destroy(gameObject);
         }
     }
